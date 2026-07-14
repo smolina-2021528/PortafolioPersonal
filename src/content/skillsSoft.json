@@ -1,0 +1,38 @@
+[
+  {
+    "id": "leadership",
+    "name": "Liderazgo",
+    "level": 80,
+    "description": "Coordinación de ideas, organización de tareas y acompañamiento del equipo para avanzar hacia objetivos claros."
+  },
+  {
+    "id": "teamwork",
+    "name": "Trabajo en equipo",
+    "level": 85,
+    "description": "Colaboración respetuosa, comunicación constante y disposición para construir soluciones en conjunto."
+  },
+  {
+    "id": "problem-solving",
+    "name": "Resolución de problemas",
+    "level": 75,
+    "description": "Análisis de obstáculos técnicos para encontrar alternativas prácticas, medibles y sostenibles."
+  },
+  {
+    "id": "critical-thinking",
+    "name": "Pensamiento crítico",
+    "level": 70,
+    "description": "Evaluación de ideas y decisiones desde distintas perspectivas antes de implementar una solución."
+  },
+  {
+    "id": "responsibility",
+    "name": "Responsabilidad",
+    "level": 90,
+    "description": "Cumplimiento de compromisos, cuidado de los detalles y seguimiento constante de cada tarea."
+  },
+  {
+    "id": "fast-learning",
+    "name": "Aprendizaje rápido",
+    "level": 65,
+    "description": "Capacidad para comprender nuevas herramientas y aplicarlas progresivamente en proyectos reales."
+  }
+]

@@ -1,0 +1,107 @@
+[
+  {
+    "id": "cosmed",
+    "title": "Cosmed",
+    "status": "En desarrollo",
+    "role": "Líder de desarrollo",
+    "technologies": [
+      "Backend",
+      "Base de datos",
+      "IA",
+      "Investigación"
+    ],
+    "description": "Herramienta de apoyo para el análisis de estudios relacionados con el riesgo de desarrollar parálisis cerebral en niños.",
+    "confidential": true,
+    "githubUrl": null,
+    "deployUrl": null,
+    "tags": [
+      "Liderazgo",
+      "Investigación",
+      "IA",
+      "Impacto social"
+    ],
+    "completed": [
+      "Estudios",
+      "Base de datos",
+      "Trabajo inicial de backend",
+      "Investigación",
+      "Análisis de datos"
+    ],
+    "pending": [
+      "Frontend",
+      "Módulo de IA",
+      "Integración final",
+      "Despliegue"
+    ],
+    "images": [
+      "/images/projects/cosmed/study-1.png",
+      "/images/projects/cosmed/chart-1.png",
+      "/images/projects/cosmed/ai-concept.png",
+      "/images/projects/cosmed/placeholder-4.png"
+    ]
+  },
+  {
+    "id": "vizflow",
+    "title": "Vizflow",
+    "status": "Publicado en NPM",
+    "role": "Autor",
+    "technologies": [
+      "NPM",
+      "CLI",
+      "HTML",
+      "CSV",
+      "JSON",
+      "XLS"
+    ],
+    "description": "Librería para generar gráficos en HTML a partir de archivos de datos o respuestas desde terminal.",
+    "githubUrl": "https://github.com/smolina-2021528/vizflow",
+    "npmCoreUrl": "https://www.npmjs.com/package/@smolina-dev/vizflow-core",
+    "npmCliUrl": "https://www.npmjs.com/package/@smolina-dev/vizflow-cli",
+    "deployUrl": null,
+    "tags": [
+      "NPM",
+      "CLI",
+      "HTML Generator",
+      "Data Visualization"
+    ],
+    "chartTypes": [
+      "Barras",
+      "Líneas",
+      "Pastel",
+      "Heatmap",
+      "Tablas",
+      "Scatter"
+    ],
+    "images": [
+      "/images/projects/vizflow/terminal.png",
+      "/images/projects/vizflow/html-output.png",
+      "/images/projects/vizflow/placeholder-3.png"
+    ]
+  },
+  {
+    "id": "restaurant-manager",
+    "title": "Gestor de restaurante",
+    "status": "Desplegado en la nube",
+    "role": "Backend Developer",
+    "technologies": [
+      "React",
+      "MongoDB",
+      "JavaScript",
+      "Docker"
+    ],
+    "description": "Sistema web para la administración centralizada de procesos internos de restaurante.",
+    "githubUrl": null,
+    "deployUrl": "https://restaurant-management-system-frontend-cnmn3vj9r-ecujcuj.vercel.app/login",
+    "tags": [
+      "Backend",
+      "Roles",
+      "Auth",
+      "Deploy"
+    ],
+    "images": [
+      "/images/projects/restaurant-manager/screenshot-1.png",
+      "/images/projects/restaurant-manager/screenshot-2.png",
+      "/images/projects/restaurant-manager/screenshot-3.png"
+    ]
+  }
+]

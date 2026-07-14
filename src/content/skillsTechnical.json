@@ -1,0 +1,80 @@
+[
+  {
+    "id": "react",
+    "name": "React",
+    "level": 70,
+    "description": "Construcción de interfaces modernas basadas en componentes, manejo de estado y organización de vistas reutilizables."
+  },
+  {
+    "id": "java",
+    "name": "Java",
+    "level": 60,
+    "description": "Desarrollo de lógica orientada a objetos y servicios estructurados para aplicaciones académicas y personales."
+  },
+  {
+    "id": "javascript",
+    "name": "JavaScript",
+    "level": 80,
+    "description": "Creación de interacciones, lógica de cliente y soluciones dinámicas para aplicaciones web."
+  },
+  {
+    "id": "nodejs",
+    "name": "Node.js",
+    "level": 55,
+    "description": "Construcción de herramientas y servicios del lado del servidor con el ecosistema de JavaScript."
+  },
+  {
+    "id": "databases",
+    "name": "Bases de datos",
+    "level": 90,
+    "description": "Diseño, consulta y estructuración de información para sistemas que requieren almacenamiento confiable y escalable."
+  },
+  {
+    "id": "python",
+    "name": "Python",
+    "level": 70,
+    "description": "Automatización, análisis de información y desarrollo de soluciones enfocadas en lógica e inteligencia artificial."
+  },
+  {
+    "id": "npm-packages",
+    "name": "NPM Packages",
+    "level": 55,
+    "description": "Diseño, empaquetado y publicación de herramientas reutilizables para otros desarrolladores."
+  },
+  {
+    "id": "deploy",
+    "name": "Deploy",
+    "level": 60,
+    "description": "Preparación y publicación de aplicaciones en servicios de alojamiento y plataformas cloud."
+  },
+  {
+    "id": "git",
+    "name": "Git",
+    "level": 85,
+    "description": "Control de versiones, organización por commits y colaboración ordenada durante el desarrollo."
+  },
+  {
+    "id": "css3",
+    "name": "CSS3",
+    "level": 80,
+    "description": "Creación de interfaces responsivas, animaciones y sistemas visuales consistentes."
+  },
+  {
+    "id": "html5",
+    "name": "HTML5",
+    "level": 85,
+    "description": "Estructuración semántica y accesible del contenido para aplicaciones web modernas."
+  },
+  {
+    "id": "typescript",
+    "name": "TypeScript",
+    "level": 65,
+    "description": "Desarrollo de código JavaScript con tipado estático para mejorar seguridad y mantenimiento."
+  },
+  {
+    "id": "csharp",
+    "name": "C#",
+    "level": 50,
+    "description": "Fundamentos de programación orientada a objetos y construcción de aplicaciones dentro del ecosistema .NET."
+  }
+]

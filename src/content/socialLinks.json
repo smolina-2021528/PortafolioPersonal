@@ -1,0 +1,17 @@
+{
+  "github": {
+    "label": "GitHub",
+    "url": "https://github.com/smolina-2021528",
+    "external": true
+  },
+  "linkedin": {
+    "label": "LinkedIn",
+    "url": "[URL_DE_LINKEDIN_PENDIENTE]",
+    "external": true
+  },
+  "email": {
+    "label": "Correo",
+    "url": "mailto:[CORREO_PENDIENTE]",
+    "external": false
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "fullName": "Sebastián Alejandro Molina Herrera",
+  "displayName": "Sebastián Molina",
+  "professionalTitle": "Desarrollador Full Stack Junior",
+  "age": 18,
+  "location": "Ciudad de Guatemala, Guatemala",
+  "institution": "Centro Educativo Técnico Laboral Kinal",
+  "career": "Perito en Informática",
+  "language": "Español",
+  "photo": "/images/profile/sebastian-photo-placeholder.webp",
+  "heroPhrase": "Construyo software con visión, propósito y una curiosidad constante por transformar ideas en impacto real.",
+  "email": "[CORREO_PENDIENTE]",
+  "panels": [
+    {
+      "id": "about",
+      "title": "Quién soy",
+      "content": "Soy Sebastián Alejandro Molina Herrera, un joven apasionado por aprender, crear y desarrollar software con propósito. Me motiva construir soluciones que no solo funcionen bien, sino que puedan generar impacto real en las personas. Como Desarrollador Full Stack Junior, busco combinar lógica, creatividad y tecnología para participar en proyectos que miren hacia el futuro y que tengan el potencial de cambiar el mundo desde la innovación."
+    },
+    {
+      "id": "goals",
+      "title": "Mis metas",
+      "content": "A corto plazo, mi objetivo es establecerme en la Universidad del Valle de Guatemala, iniciar mis estudios superiores y continuar desarrollando proyectos personales que fortalezcan mi perfil técnico. En tres años, me visualizo trabajando con un equipo pequeño de personas que compartan intereses similares, construyendo startups y productos digitales con potencial real. En cinco años, espero culminar mis estudios universitarios y participar en proyectos de alcance centroamericano impulsados por inteligencia artificial."
+    },
+    {
+      "id": "professional-focus",
+      "title": "Enfoque profesional",
+      "content": "Mi enfoque profesional se orienta al desarrollo Full Stack, la inteligencia artificial aplicada, la creación de herramientas para desarrolladores y el liderazgo técnico en proyectos con impacto. Me interesa construir productos completos, desde la arquitectura y la lógica del backend hasta experiencias visuales claras, modernas y funcionales."
+    }
+  ]
+}

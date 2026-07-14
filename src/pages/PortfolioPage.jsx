@@ -1,3 +1,4 @@
+import RightSidebar from "../islands/right-sidebar/RightSidebar";
 import ContactSection from "../sections/ContactSection";
 import CurriculumSection from "../sections/CurriculumSection";
 import ProfileSection from "../sections/ProfileSection";
@@ -8,7 +9,11 @@ import WelcomeSection from "../sections/WelcomeSection";
 function PortfolioPage() {
   return (
     <>
-      <h1 className="sr-only">Portafolio de Sebastián Molina</h1>
+      <h1 className="sr-only">
+        Portafolio de Sebastián Molina
+      </h1>
+
+      <RightSidebar />
 
       <WelcomeSection />
       <ProfileSection />

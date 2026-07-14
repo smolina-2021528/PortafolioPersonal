@@ -63,3 +63,121 @@ a:focus-visible {
     transition-duration: 0.01ms !important;
   }
 }
+
+.cyber-grid {
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px
+    );
+
+  background-size: 72px 72px;
+  mask-image: linear-gradient(
+    to bottom,
+    black,
+    transparent 92%
+  );
+}
+
+.glitch-text {
+  position: relative;
+  display: block;
+  width: fit-content;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  width: 100%;
+  color: inherit;
+  content: attr(data-text);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.glitch-text.is-glitching::before {
+  z-index: 1;
+  color: #00f2fe;
+  opacity: 0.72;
+  animation: glitch-cyan 220ms steps(2, jump-none) both;
+  clip-path: inset(12% 0 56% 0);
+}
+
+.glitch-text.is-glitching::after {
+  z-index: 1;
+  color: #ff007f;
+  opacity: 0.72;
+  animation: glitch-magenta 220ms steps(2, jump-none) both;
+  clip-path: inset(58% 0 16% 0);
+}
+
+.glitch-text.is-glitching {
+  animation: glitch-base 220ms steps(2, jump-none) both;
+}
+
+@keyframes glitch-base {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  28% {
+    transform: translate3d(-2px, 0, 0);
+  }
+
+  55% {
+    transform: translate3d(2px, 0, 0);
+  }
+}
+
+@keyframes glitch-cyan {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  32% {
+    transform: translate3d(-8px, -1px, 0);
+  }
+
+  67% {
+    transform: translate3d(5px, 1px, 0);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes glitch-magenta {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  30% {
+    transform: translate3d(7px, 1px, 0);
+  }
+
+  68% {
+    transform: translate3d(-5px, -1px, 0);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glitch-text,
+  .glitch-text::before,
+  .glitch-text::after {
+    animation: none !important;
+  }
+}

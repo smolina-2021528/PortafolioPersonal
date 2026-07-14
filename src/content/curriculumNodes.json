@@ -2,89 +2,205 @@
   {
     "id": "kinal-fourth",
     "title": "4.º Perito en Informática",
+    "shortTitle": "4.º Perito",
     "subtitle": "Fundamentos",
     "institution": "Centro Educativo Técnico Laboral Kinal",
     "focus": "Fundamentos de programación",
-    "description": "Introducción a lógica, programación y bases técnicas.",
+    "description": "Introducción a la lógica de programación, resolución de problemas y construcción de bases técnicas para el desarrollo de software.",
     "type": "Formación académica",
-    "connections": ["kinal-fifth", "cisco-it-essentials"]
+    "category": "academic",
+    "connections": [
+      "kinal-fifth",
+      "cisco-it-essentials"
+    ],
+    "position": {
+      "mobile": {
+        "x": 22,
+        "y": 9
+      },
+      "desktop": {
+        "x": 11,
+        "y": 25
+      }
+    }
   },
   {
     "id": "kinal-fifth",
     "title": "5.º Perito en Informática",
+    "shortTitle": "5.º Perito",
     "subtitle": "Desarrollo técnico",
     "institution": "Centro Educativo Técnico Laboral Kinal",
     "focus": "Desarrollo de software",
-    "description": "Fortalecimiento de programación, proyectos académicos y herramientas técnicas.",
+    "description": "Fortalecimiento de conocimientos de programación mediante proyectos académicos, herramientas técnicas y construcción de aplicaciones más estructuradas.",
     "type": "Formación académica",
-    "connections": ["kinal-fourth", "kinal-sixth", "ibm-ai"]
+    "category": "academic",
+    "connections": [
+      "kinal-fourth",
+      "kinal-sixth",
+      "ibm-ai"
+    ],
+    "position": {
+      "mobile": {
+        "x": 73,
+        "y": 18
+      },
+      "desktop": {
+        "x": 30,
+        "y": 12
+      }
+    }
   },
   {
     "id": "kinal-sixth",
     "title": "6.º Perito en Informática",
+    "shortTitle": "6.º Perito",
     "subtitle": "Consolidación Full Stack",
     "institution": "Centro Educativo Técnico Laboral Kinal",
     "focus": "Desarrollo Full Stack",
-    "description": "Proyectos integradores, backend, frontend, bases de datos y despliegues.",
+    "description": "Desarrollo de proyectos integradores que combinan frontend, backend, bases de datos, control de versiones y despliegue de aplicaciones.",
     "type": "Formación académica",
+    "category": "academic",
     "connections": [
       "kinal-fifth",
       "cosmed-leadership",
       "vizflow-npm"
-    ]
+    ],
+    "position": {
+      "mobile": {
+        "x": 34,
+        "y": 30
+      },
+      "desktop": {
+        "x": 49,
+        "y": 29
+      }
+    }
   },
   {
     "id": "ibm-ai",
     "title": "Fundamentos de IA",
+    "shortTitle": "IBM IA",
     "subtitle": "IBM SkillsBuild",
     "institution": "IBM SkillsBuild",
     "focus": "Introducción a inteligencia artificial",
-    "description": "Conceptos iniciales de inteligencia artificial y revisión de sus aplicaciones.",
+    "description": "Formación introductoria sobre inteligencia artificial, sus principales conceptos, sus aplicaciones y su impacto en distintos sectores.",
     "type": "Certificación",
+    "category": "certification",
     "connections": [
       "kinal-fifth",
       "elements-ai",
       "cosmed-leadership"
-    ]
+    ],
+    "position": {
+      "mobile": {
+        "x": 76,
+        "y": 42
+      },
+      "desktop": {
+        "x": 72,
+        "y": 14
+      }
+    }
   },
   {
     "id": "elements-ai",
     "title": "Elements of AI",
+    "shortTitle": "Elements of AI",
     "subtitle": "Minna Learn",
     "institution": "Minna Learn",
     "focus": "Conceptos fundamentales de IA",
-    "description": "Comprensión de conceptos fundamentales, posibilidades y límites de la inteligencia artificial.",
+    "description": "Comprensión de los fundamentos de la inteligencia artificial, sus posibilidades, limitaciones y aplicaciones dentro de situaciones reales.",
     "type": "Certificación",
-    "connections": ["ibm-ai", "cosmed-leadership"]
+    "category": "certification",
+    "connections": [
+      "ibm-ai",
+      "cosmed-leadership"
+    ],
+    "position": {
+      "mobile": {
+        "x": 23,
+        "y": 53
+      },
+      "desktop": {
+        "x": 89,
+        "y": 34
+      }
+    }
   },
   {
     "id": "cisco-it-essentials",
     "title": "IT Essentials",
+    "shortTitle": "IT Essentials",
     "subtitle": "Cisco",
     "institution": "Cisco",
     "focus": "Hardware, software y soporte técnico",
-    "description": "Fundamentos de equipos, sistemas operativos, mantenimiento y soporte técnico.",
+    "description": "Conocimientos esenciales sobre hardware, sistemas operativos, mantenimiento, resolución de fallos y soporte técnico de equipos.",
     "type": "Certificación",
-    "connections": ["kinal-fourth", "vizflow-npm"]
+    "category": "certification",
+    "connections": [
+      "kinal-fourth",
+      "vizflow-npm"
+    ],
+    "position": {
+      "mobile": {
+        "x": 67,
+        "y": 64
+      },
+      "desktop": {
+        "x": 24,
+        "y": 73
+      }
+    }
   },
   {
     "id": "cosmed-leadership",
     "title": "Liderazgo en Cosmed",
+    "shortTitle": "Cosmed",
     "subtitle": "Proyecto con impacto social",
     "institution": "Logos Institute de Fundación Amivalle",
     "focus": "Investigación, backend, base de datos e IA",
-    "description": "Participación como líder de desarrollo en una herramienta de apoyo con restricciones de confidencialidad.",
+    "description": "Participación como líder de desarrollo en una herramienta de apoyo orientada al análisis de estudios, trabajando bajo restricciones de privacidad y confidencialidad.",
     "type": "Proyecto / liderazgo",
-    "connections": ["kinal-sixth", "ibm-ai", "elements-ai"]
+    "category": "project",
+    "connections": [
+      "kinal-sixth",
+      "ibm-ai",
+      "elements-ai"
+    ],
+    "position": {
+      "mobile": {
+        "x": 27,
+        "y": 78
+      },
+      "desktop": {
+        "x": 55,
+        "y": 69
+      }
+    }
   },
   {
     "id": "vizflow-npm",
     "title": "Vizflow en NPM",
+    "shortTitle": "Vizflow",
     "subtitle": "Publicación técnica",
     "institution": "NPM",
     "focus": "Visualización de datos y herramientas CLI",
-    "description": "Diseño y publicación de una librería para generar gráficos HTML desde distintas fuentes de datos.",
+    "description": "Diseño, desarrollo y publicación de una librería capaz de transformar distintas fuentes de datos en visualizaciones HTML mediante una interfaz de terminal.",
     "type": "Proyecto técnico / publicación",
-    "connections": ["kinal-sixth", "cisco-it-essentials"]
+    "category": "project",
+    "connections": [
+      "kinal-sixth",
+      "cisco-it-essentials"
+    ],
+    "position": {
+      "mobile": {
+        "x": 74,
+        "y": 90
+      },
+      "desktop": {
+        "x": 82,
+        "y": 80
+      }
+    }
   }
 ]

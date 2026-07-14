@@ -50,7 +50,7 @@ function AccordionPanel({
           ease: [0.22, 1, 0.36, 1],
         },
       }}
-      className={`relative flex min-h-36 flex-col overflow-hidden rounded-[1.75rem] border transition-colors duration-300 lg:min-h-136 ${
+      className={`relative flex min-h-36 flex-col overflow-hidden rounded-[1.75rem] border transition-colors duration-300 lg:min-h-100 xl:min-h-104 ${
         isActive
           ? "border-cyan-electric/30 bg-cyan-electric/5.5 shadow-[0_24px_80px_rgba(0,242,254,0.08)] lg:flex-5"
           : "border-white/10 bg-white/2.5 hover:border-cyan-electric/20 hover:bg-white/4 lg:flex-[0.85]"
@@ -138,13 +138,13 @@ function AccordionPanel({
               duration: prefersReducedMotion ? 0 : 0.35,
               ease: [0.22, 1, 0.36, 1],
             }}
-            className="flex flex-1 flex-col justify-between px-5 pb-6 lg:px-8 lg:pb-8"
+            className="px-5 pb-6 lg:px-8 lg:pb-7"
           >
             <p className="max-w-3xl text-base font-light leading-8 text-foreground/70 sm:text-lg sm:leading-9">
               {panel.content}
             </p>
 
-            <div className="mt-10 flex items-center gap-3 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-foreground/35">
+            <div className="mt-8 flex items-center gap-3 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-foreground/35">
               <span
                 aria-hidden="true"
                 className="h-px w-10 bg-cyan-electric/40"

@@ -2,12 +2,18 @@ import GaugeComponent from "react-gauge-component";
 
 function SkillGauge({
   skill,
-  index,
   hasStarted,
   isSelected,
   prefersReducedMotion,
+  replayToken,
 }) {
-  const visibleValue = hasStarted ? skill.level : 0;
+  const gaugeValue = hasStarted ? skill.level : 0;
+
+  const gaugeAnimationKey = [
+    skill.id,
+    hasStarted ? "active" : "idle",
+    replayToken,
+  ].join("-");
 
   return (
     <div
@@ -15,9 +21,10 @@ function SkillGauge({
       className="relative mx-auto w-full max-w-[16rem]"
     >
       <GaugeComponent
+        key={gaugeAnimationKey}
         id={`technical-gauge-${skill.id}`}
         type="semicircle"
-        value={visibleValue}
+        value={gaugeValue}
         minValue={0}
         maxValue={100}
         className="w-full"
@@ -40,10 +47,10 @@ function SkillGauge({
           baseColor: "#F8FAFC",
           length: 0.72,
           width: 13,
-          animate: !prefersReducedMotion,
+          animate: !prefersReducedMotion && hasStarted,
           elastic: false,
-          animationDuration: 1100,
-          animationDelay: index * 70,
+          animationDuration: 1000,
+          animationDelay: 0,
           maxFps: 30,
         }}
         labels={{
@@ -71,7 +78,7 @@ function SkillGauge({
               : "border-white/10 bg-background/85 text-foreground"
           }`}
         >
-          {visibleValue}%
+          {gaugeValue}%
         </div>
       </div>
     </div>

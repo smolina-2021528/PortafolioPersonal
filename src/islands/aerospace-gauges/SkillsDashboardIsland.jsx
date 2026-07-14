@@ -41,7 +41,12 @@ function getDashboardMetrics(skills) {
 
 function SkillsDashboardIsland() {
   const prefersReducedMotion = Boolean(useReducedMotion());
-  const [selectedSkillId, setSelectedSkillId] = useState(null);
+
+  const [selectedSkillId, setSelectedSkillId] =
+    useState(null);
+
+  const [gaugeReplayTokens, setGaugeReplayTokens] =
+    useState({});
 
   const {
     containerRef,
@@ -57,6 +62,15 @@ function SkillsDashboardIsland() {
     technicalSkills.find(
       (skill) => skill.id === selectedSkillId,
     ) ?? null;
+
+  const handleSkillSelect = (skillId) => {
+    setSelectedSkillId(skillId);
+
+    setGaugeReplayTokens((currentTokens) => ({
+      ...currentTokens,
+      [skillId]: (currentTokens[skillId] ?? 0) + 1,
+    }));
+  };
 
   useEffect(() => {
     if (!selectedSkillId) {
@@ -134,9 +148,9 @@ function SkillsDashboardIsland() {
             </h2>
 
             <p className="mt-6 max-w-2xl text-base font-light leading-8 text-foreground/58 sm:text-lg">
-              Una lectura visual de las tecnologías, herramientas
-              y conocimientos que forman mi perfil como
-              desarrollador Full Stack.
+              Una lectura visual de las tecnologías,
+              herramientas y conocimientos que forman mi
+              perfil como desarrollador Full Stack.
             </p>
           </div>
 
@@ -167,7 +181,8 @@ function SkillsDashboardIsland() {
               </span>
 
               <span className="mt-1 block truncate font-mono text-sm font-semibold text-cyan-electric">
-                {dashboardMetrics.strongestSkill?.name ?? "N/A"}
+                {dashboardMetrics.strongestSkill?.name ??
+                  "N/A"}
               </span>
             </div>
           </div>
@@ -272,8 +287,11 @@ function SkillsDashboardIsland() {
               index={index}
               hasStarted={hasStarted}
               isSelected={selectedSkillId === skill.id}
-              onSelect={setSelectedSkillId}
+              onSelect={handleSkillSelect}
               prefersReducedMotion={prefersReducedMotion}
+              replayToken={
+                gaugeReplayTokens[skill.id] ?? 0
+              }
             />
           ))}
         </div>

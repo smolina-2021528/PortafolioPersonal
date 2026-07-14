@@ -10,6 +10,7 @@ function GaugeCard({
   isSelected,
   onSelect,
   prefersReducedMotion,
+  replayToken,
 }) {
   const skillNumber = String(index + 1).padStart(2, "0");
 
@@ -52,14 +53,14 @@ function GaugeCard({
           ? undefined
           : {
               y: -4,
-          }
+            }
       }
       whileTap={
         prefersReducedMotion
           ? undefined
           : {
               scale: 0.985,
-          }
+            }
       }
       onClick={() => onSelect(skill.id)}
       className={`group relative flex min-h-88 w-full flex-col overflow-hidden rounded-[1.6rem] border p-5 text-left transition-colors duration-300 focus-visible:outline-none ${
@@ -103,10 +104,10 @@ function GaugeCard({
       <div className="mt-5 flex flex-1 items-center">
         <SkillGauge
           skill={skill}
-          index={index}
           hasStarted={hasStarted}
           isSelected={isSelected}
           prefersReducedMotion={prefersReducedMotion}
+          replayToken={replayToken}
         />
       </div>
 

@@ -48,12 +48,6 @@
     "description": "Preparación y publicación de aplicaciones en servicios de alojamiento y plataformas cloud."
   },
   {
-    "id": "git",
-    "name": "Git",
-    "level": 85,
-    "description": "Control de versiones, organización por commits y colaboración ordenada durante el desarrollo."
-  },
-  {
     "id": "css3",
     "name": "CSS3",
     "level": 80,

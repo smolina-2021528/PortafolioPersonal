@@ -11,7 +11,10 @@ function getStatusStyles(status) {
     };
   }
 
-  if (normalizedStatus.includes("npm")) {
+  if (
+    normalizedStatus.includes("npm") ||
+    normalizedStatus.includes("desplegado")
+  ) {
     return {
       dot: "bg-cyan-electric shadow-[0_0_12px_rgba(0,242,254,0.65)]",
       text: "text-cyan-electric",
@@ -40,14 +43,19 @@ function ProjectMinimalCard({
     "0",
   );
 
+  const handleSelect = (event) => {
+    onSelect(project.id, event.currentTarget);
+  };
+
   return (
     <motion.button
       type="button"
       layout={!prefersReducedMotion}
       layoutId={`project-card-${project.id}`}
-      aria-label={`Seleccionar proyecto ${project.title}`}
-      aria-pressed={isSelected}
-      onClick={() => onSelect(project.id)}
+      aria-label={`Abrir detalles del proyecto ${project.title}`}
+      aria-haspopup="dialog"
+      aria-expanded={isSelected}
+      onClick={handleSelect}
       initial={
         prefersReducedMotion
           ? false
@@ -160,14 +168,8 @@ function ProjectMinimalCard({
           </span>
         </div>
 
-        <span
-          className={`font-mono text-[0.55rem] uppercase tracking-[0.16em] transition-colors ${
-            isSelected
-              ? "text-cyan-electric"
-              : "text-foreground/25"
-          }`}
-        >
-          {isSelected ? "Selected" : "Standby"}
+        <span className="font-mono text-[0.55rem] uppercase tracking-[0.16em] text-foreground/25 transition-colors group-hover:text-cyan-electric">
+          Open project
         </span>
       </div>
     </motion.button>

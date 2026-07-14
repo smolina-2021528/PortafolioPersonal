@@ -1,4 +1,5 @@
 import {
+  AnimatePresence,
   LayoutGroup,
   motion,
   useReducedMotion,
@@ -9,17 +10,20 @@ import {
 } from "lucide-react";
 
 import projects from "../../content/projects.json";
+import ProjectLightbox from "./ProjectLightbox";
 import ProjectMinimalCard from "./ProjectMinimalCard";
 import useProjectLightbox from "./useProjectLightbox";
 
 function getProjectMetrics(projectList) {
   return {
     total: projectList.length,
+
     published: projectList.filter((project) =>
       project.status
         .toLowerCase()
         .includes("publicado"),
     ).length,
+
     deployed: projectList.filter((project) =>
       project.status
         .toLowerCase()
@@ -72,7 +76,9 @@ function ProjectsLightboxIsland() {
           amount: 0.3,
         }}
         transition={{
-          duration: prefersReducedMotion ? 0 : 0.65,
+          duration: prefersReducedMotion
+            ? 0
+            : 0.65,
           ease: [0.22, 1, 0.36, 1],
         }}
         className="relative"
@@ -140,36 +146,30 @@ function ProjectsLightboxIsland() {
         </div>
       </motion.header>
 
-      <div className="relative mt-12 overflow-hidden rounded-4xl border border-white/10 bg-white/[0.018] p-3 sm:p-4">
-        <div className="flex flex-wrap items-center justify-between gap-4 px-3 py-3 sm:px-4">
-          <div className="flex items-center gap-3">
-            <Layers3
-              aria-hidden="true"
-              className="size-4 text-cyan-electric"
-            />
+      <LayoutGroup id="projects-gallery">
+        <div className="relative mt-12 overflow-hidden rounded-4xl border border-white/10 bg-white/[0.018] p-3 sm:p-4">
+          <div className="flex flex-wrap items-center justify-between gap-4 px-3 py-3 sm:px-4">
+            <div className="flex items-center gap-3">
+              <Layers3
+                aria-hidden="true"
+                className="size-4 text-cyan-electric"
+              />
 
-            <p className="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-foreground/42">
-              Project modules
-            </p>
+              <p className="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-foreground/42">
+                Project modules
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2 font-mono text-[0.58rem] uppercase tracking-[0.16em] text-foreground/32">
+              <span
+                aria-hidden="true"
+                className="size-1.5 rounded-full bg-cyan-electric shadow-[0_0_10px_rgba(0,242,254,0.8)]"
+              />
+
+              {projects.length} modules available
+            </div>
           </div>
 
-          <div className="flex items-center gap-2 font-mono text-[0.58rem] uppercase tracking-[0.16em] text-foreground/32">
-            <span
-              aria-hidden="true"
-              className={`size-1.5 rounded-full ${
-                selectedProject
-                  ? "bg-cyan-electric shadow-[0_0_10px_rgba(0,242,254,0.8)]"
-                  : "bg-foreground/25"
-              }`}
-            />
-
-            {selectedProject
-              ? "Module selected"
-              : "Awaiting selection"}
-          </div>
-        </div>
-
-        <LayoutGroup id="projects-gallery">
           <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
             {projects.map((project, index) => (
               <ProjectMinimalCard
@@ -186,66 +186,26 @@ function ProjectsLightboxIsland() {
               />
             ))}
           </div>
-        </LayoutGroup>
-      </div>
+        </div>
 
-      <div className="relative mt-6 min-h-20">
-        {selectedProject ? (
-          <motion.div
-            key={selectedProject.id}
-            initial={
-              prefersReducedMotion
-                ? false
-                : {
-                    opacity: 0,
-                    y: 10,
-                  }
-            }
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              duration: prefersReducedMotion ? 0 : 0.3,
-            }}
-            className="flex flex-col gap-4 rounded-[1.4rem] border border-cyan-electric/20 bg-cyan-electric/4 px-5 py-4 sm:flex-row sm:items-center sm:justify-between"
-          >
-            <div>
-              <p className="font-mono text-[0.58rem] uppercase tracking-[0.18em] text-cyan-electric">
-                Selected project
-              </p>
-
-              <p className="mt-2 text-sm text-foreground/65">
-                {selectedProject.title} está preparado para
-                expandirse hacia la vista detallada.
-              </p>
-            </div>
-
-            <button
-              type="button"
-              onClick={clearSelection}
-              className="self-start rounded-full border border-white/10 px-4 py-2 font-mono text-[0.58rem] uppercase tracking-[0.16em] text-foreground/45 transition-colors hover:border-cyan-electric/25 hover:text-cyan-electric sm:self-auto"
-            >
-              Limpiar selección
-            </button>
-          </motion.div>
-        ) : (
-          <div className="flex min-h-20 items-center rounded-[1.4rem] border border-dashed border-white/8 px-5">
-            <p className="font-mono text-[0.58rem] uppercase tracking-[0.18em] text-foreground/28">
-              Selecciona una tarjeta para preparar su vista
-              ampliada
-            </p>
-          </div>
-        )}
-      </div>
+        <AnimatePresence>
+          {selectedProject ? (
+            <ProjectLightbox
+              key={selectedProject.id}
+              project={selectedProject}
+              onClose={clearSelection}
+            />
+          ) : null}
+        </AnimatePresence>
+      </LayoutGroup>
 
       <p
         aria-live="polite"
         className="sr-only"
       >
         {selectedProject
-          ? `Proyecto seleccionado: ${selectedProject.title}`
-          : "No hay ningún proyecto seleccionado"}
+          ? `Proyecto abierto: ${selectedProject.title}`
+          : "No hay ningún proyecto abierto"}
       </p>
     </div>
   );

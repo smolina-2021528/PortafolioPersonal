@@ -5,12 +5,55 @@ import {
   Orbit,
   Radio,
 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
+import softSkills from "../../content/skillsSoft.json";
 import technicalSkills from "../../content/skillsTechnical.json";
 import GaugeCard from "./GaugeCard";
 import SkillExplanation from "./SkillExplanation";
 import useGaugeAnimation from "./useGaugeAnimation";
+
+const skillCategories = {
+  technical: {
+    id: "technical",
+    tabId: "technical-knowledge-tab",
+    panelId: "technical-knowledge-panel",
+    explanationId: "technical-skill-explanation",
+    label: "Technical Knowledge",
+    status: "Online",
+    categoryCode: "TK",
+    gaugeIdPrefix: "technical",
+    telemetryLabel: "Technical telemetry",
+    analysisLabel: "Technical analysis",
+    emptyMessage:
+      "Selecciona uno de los indicadores para conocer cómo se aplica esa tecnología dentro de los proyectos de Sebastián.",
+    description:
+      "Tecnologías, lenguajes y herramientas que forman mi perfil como desarrollador Full Stack.",
+    icon: Cpu,
+    skills: technicalSkills,
+  },
+
+  soft: {
+    id: "soft",
+    tabId: "soft-skills-tab",
+    panelId: "soft-skills-panel",
+    explanationId: "soft-skill-explanation",
+    label: "Soft Skills",
+    status: "Online",
+    categoryCode: "SS",
+    gaugeIdPrefix: "soft",
+    telemetryLabel: "Human telemetry",
+    analysisLabel: "Behavioral analysis",
+    emptyMessage:
+      "Selecciona uno de los indicadores para conocer cómo esta habilidad contribuye al trabajo individual y en equipo.",
+    description:
+      "Capacidades humanas que acompañan mi crecimiento técnico y mi participación dentro de equipos de desarrollo.",
+    icon: Radio,
+    skills: softSkills,
+  },
+};
+
+const categoryIds = Object.keys(skillCategories);
 
 function getDashboardMetrics(skills) {
   if (!skills.length) {
@@ -21,7 +64,8 @@ function getDashboardMetrics(skills) {
   }
 
   const total = skills.reduce(
-    (accumulator, skill) => accumulator + skill.level,
+    (accumulator, skill) =>
+      accumulator + skill.level,
     0,
   );
 
@@ -40,7 +84,12 @@ function getDashboardMetrics(skills) {
 }
 
 function SkillsDashboardIsland() {
-  const prefersReducedMotion = Boolean(useReducedMotion());
+  const prefersReducedMotion = Boolean(
+    useReducedMotion(),
+  );
+
+  const [activeCategoryId, setActiveCategoryId] =
+    useState("technical");
 
   const [selectedSkillId, setSelectedSkillId] =
     useState(null);
@@ -53,22 +102,101 @@ function SkillsDashboardIsland() {
     hasStarted,
   } = useGaugeAnimation(prefersReducedMotion);
 
-  const dashboardMetrics = useMemo(
-    () => getDashboardMetrics(technicalSkills),
-    [],
+  const activeCategory =
+    skillCategories[activeCategoryId];
+
+  const dashboardMetrics = getDashboardMetrics(
+    activeCategory.skills,
   );
 
   const selectedSkill =
-    technicalSkills.find(
+    activeCategory.skills.find(
       (skill) => skill.id === selectedSkillId,
     ) ?? null;
 
+  const handleCategoryChange = (
+    categoryId,
+    shouldFocus = false,
+  ) => {
+    const nextCategory = skillCategories[categoryId];
+
+    if (!nextCategory) {
+      return;
+    }
+
+    setActiveCategoryId(categoryId);
+    setSelectedSkillId(null);
+
+    if (shouldFocus) {
+      window.requestAnimationFrame(() => {
+        document
+          .getElementById(nextCategory.tabId)
+          ?.focus();
+      });
+    }
+  };
+
+  const handleTabKeyDown = (
+    event,
+    categoryId,
+  ) => {
+    const currentIndex =
+      categoryIds.indexOf(categoryId);
+
+    let nextIndex;
+
+    switch (event.key) {
+      case "ArrowRight":
+      case "ArrowDown":
+        event.preventDefault();
+
+        nextIndex =
+          (currentIndex + 1) %
+          categoryIds.length;
+        break;
+
+      case "ArrowLeft":
+      case "ArrowUp":
+        event.preventDefault();
+
+        nextIndex =
+          (
+            currentIndex -
+            1 +
+            categoryIds.length
+          ) % categoryIds.length;
+        break;
+
+      case "Home":
+        event.preventDefault();
+        nextIndex = 0;
+        break;
+
+      case "End":
+        event.preventDefault();
+        nextIndex = categoryIds.length - 1;
+        break;
+
+      default:
+        return;
+    }
+
+    handleCategoryChange(
+      categoryIds[nextIndex],
+      true,
+    );
+  };
+
   const handleSkillSelect = (skillId) => {
+    const replayKey =
+      `${activeCategoryId}:${skillId}`;
+
     setSelectedSkillId(skillId);
 
     setGaugeReplayTokens((currentTokens) => ({
       ...currentTokens,
-      [skillId]: (currentTokens[skillId] ?? 0) + 1,
+      [replayKey]:
+        (currentTokens[replayKey] ?? 0) + 1,
     }));
   };
 
@@ -83,10 +211,16 @@ function SkillsDashboardIsland() {
       }
     };
 
-    window.addEventListener("keydown", handleEscape);
+    window.addEventListener(
+      "keydown",
+      handleEscape,
+    );
 
     return () => {
-      window.removeEventListener("keydown", handleEscape);
+      window.removeEventListener(
+        "keydown",
+        handleEscape,
+      );
     };
   }, [selectedSkillId]);
 
@@ -120,7 +254,8 @@ function SkillsDashboardIsland() {
           amount: 0.3,
         }}
         transition={{
-          duration: prefersReducedMotion ? 0 : 0.65,
+          duration:
+            prefersReducedMotion ? 0 : 0.65,
           ease: [0.22, 1, 0.36, 1],
         }}
         className="relative"
@@ -148,9 +283,7 @@ function SkillsDashboardIsland() {
             </h2>
 
             <p className="mt-6 max-w-2xl text-base font-light leading-8 text-foreground/58 sm:text-lg">
-              Una lectura visual de las tecnologías,
-              herramientas y conocimientos que forman mi
-              perfil como desarrollador Full Stack.
+              {activeCategory.description}
             </p>
           </div>
 
@@ -161,7 +294,7 @@ function SkillsDashboardIsland() {
               </span>
 
               <span className="mt-1 block font-mono text-lg font-semibold text-cyan-electric">
-                {technicalSkills.length}
+                {activeCategory.skills.length}
               </span>
             </div>
 
@@ -175,14 +308,14 @@ function SkillsDashboardIsland() {
               </span>
             </div>
 
-            <div className="rounded-xl bg-background/55 px-4 py-3">
+            <div className="min-w-0 rounded-xl bg-background/55 px-4 py-3">
               <span className="block font-mono text-[0.55rem] uppercase tracking-[0.18em] text-foreground/35">
                 Peak
               </span>
 
               <span className="mt-1 block truncate font-mono text-sm font-semibold text-cyan-electric">
-                {dashboardMetrics.strongestSkill?.name ??
-                  "N/A"}
+                {dashboardMetrics.strongestSkill
+                  ?.name ?? "N/A"}
               </span>
             </div>
           </div>
@@ -194,61 +327,69 @@ function SkillsDashboardIsland() {
         aria-label="Categorías de habilidades"
         className="relative mt-12 flex flex-col gap-3 rounded-[1.4rem] border border-white/10 bg-white/2.5 p-2 sm:flex-row"
       >
-        <button
-          id="technical-knowledge-tab"
-          type="button"
-          role="tab"
-          aria-selected="true"
-          aria-controls="technical-knowledge-panel"
-          className="flex min-h-14 flex-1 items-center justify-between gap-4 rounded-xl border border-cyan-electric/25 bg-cyan-electric/[0.07] px-5 text-left text-cyan-electric"
-        >
-          <span className="flex items-center gap-3">
-            <Cpu
-              aria-hidden="true"
-              className="size-4"
-            />
+        {categoryIds.map((categoryId) => {
+          const category =
+            skillCategories[categoryId];
 
-            <span className="font-mono text-xs uppercase tracking-[0.17em]">
-              Technical Knowledge
-            </span>
-          </span>
+          const CategoryIcon = category.icon;
 
-          <span className="font-mono text-[0.58rem] uppercase tracking-[0.16em]">
-            Online
-          </span>
-        </button>
+          const isActive =
+            activeCategoryId === categoryId;
 
-        <button
-          type="button"
-          role="tab"
-          aria-selected="false"
-          aria-disabled="true"
-          disabled
-          className="flex min-h-14 flex-1 cursor-not-allowed items-center justify-between gap-4 rounded-xl border border-white/7 px-5 text-left text-foreground/28"
-        >
-          <span className="flex items-center gap-3">
-            <Radio
-              aria-hidden="true"
-              className="size-4"
-            />
+          return (
+            <button
+              key={category.id}
+              id={category.tabId}
+              type="button"
+              role="tab"
+              aria-selected={isActive}
+              aria-controls={category.panelId}
+              tabIndex={isActive ? 0 : -1}
+              onClick={() =>
+                handleCategoryChange(
+                  category.id,
+                )
+              }
+              onKeyDown={(event) =>
+                handleTabKeyDown(
+                  event,
+                  category.id,
+                )
+              }
+              className={`flex min-h-14 flex-1 items-center justify-between gap-4 rounded-xl border px-5 text-left transition-all duration-300 ${
+                isActive
+                  ? "border-cyan-electric/25 bg-cyan-electric/[0.07] text-cyan-electric shadow-[0_0_22px_rgba(0,242,254,0.06)]"
+                  : "border-white/7 text-foreground/35 hover:border-cyan-electric/20 hover:text-foreground/65"
+              }`}
+            >
+              <span className="flex items-center gap-3">
+                <CategoryIcon
+                  aria-hidden="true"
+                  className="size-4"
+                />
 
-            <span className="font-mono text-xs uppercase tracking-[0.17em]">
-              Soft Skills
-            </span>
-          </span>
+                <span className="font-mono text-xs uppercase tracking-[0.17em]">
+                  {category.label}
+                </span>
+              </span>
 
-          <span className="font-mono text-[0.58rem] uppercase tracking-[0.16em]">
-            Commit 06
-          </span>
-        </button>
+              <span className="font-mono text-[0.58rem] uppercase tracking-[0.16em]">
+                {isActive
+                  ? category.status
+                  : "Standby"}
+              </span>
+            </button>
+          );
+        })}
       </div>
 
       <div
         ref={containerRef}
-        id="technical-knowledge-panel"
+        id={activeCategory.panelId}
         role="tabpanel"
-        aria-labelledby="technical-knowledge-tab"
-        tabIndex="0"
+        aria-labelledby={activeCategory.tabId}
+        tabIndex={0}
+        data-category={activeCategory.id}
         className="relative mt-8 rounded-4xl border border-white/8 bg-background/25 p-3 focus-visible:outline-none sm:p-4"
       >
         <div className="mb-5 flex flex-wrap items-center justify-between gap-4 px-2 pt-2">
@@ -259,7 +400,7 @@ function SkillsDashboardIsland() {
             />
 
             <p className="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-foreground/42">
-              Technical telemetry
+              {activeCategory.telemetryLabel}
             </p>
           </div>
 
@@ -280,28 +421,67 @@ function SkillsDashboardIsland() {
         </div>
 
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-          {technicalSkills.map((skill, index) => (
-            <GaugeCard
-              key={skill.id}
-              skill={skill}
-              index={index}
-              hasStarted={hasStarted}
-              isSelected={selectedSkillId === skill.id}
-              onSelect={handleSkillSelect}
-              prefersReducedMotion={prefersReducedMotion}
-              replayToken={
-                gaugeReplayTokens[skill.id] ?? 0
-              }
-            />
-          ))}
+          {activeCategory.skills.map(
+            (skill, index) => {
+              const replayKey =
+                `${activeCategoryId}:${skill.id}`;
+
+              return (
+                <GaugeCard
+                  key={`${activeCategory.id}-${skill.id}`}
+                  skill={skill}
+                  index={index}
+                  categoryCode={
+                    activeCategory.categoryCode
+                  }
+                  explanationId={
+                    activeCategory.explanationId
+                  }
+                  gaugeIdPrefix={
+                    activeCategory.gaugeIdPrefix
+                  }
+                  telemetryLabel={
+                    activeCategory.telemetryLabel
+                  }
+                  hasStarted={hasStarted}
+                  isSelected={
+                    selectedSkillId === skill.id
+                  }
+                  onSelect={handleSkillSelect}
+                  prefersReducedMotion={
+                    prefersReducedMotion
+                  }
+                  replayToken={
+                    gaugeReplayTokens[
+                      replayKey
+                    ] ?? 0
+                  }
+                />
+              );
+            },
+          )}
         </div>
       </div>
 
       <div className="relative mt-6">
         <SkillExplanation
+          key={activeCategory.id}
           skill={selectedSkill}
-          onClose={() => setSelectedSkillId(null)}
-          prefersReducedMotion={prefersReducedMotion}
+          explanationId={
+            activeCategory.explanationId
+          }
+          analysisLabel={
+            activeCategory.analysisLabel
+          }
+          emptyMessage={
+            activeCategory.emptyMessage
+          }
+          onClose={() =>
+            setSelectedSkillId(null)
+          }
+          prefersReducedMotion={
+            prefersReducedMotion
+          }
         />
       </div>
     </div>

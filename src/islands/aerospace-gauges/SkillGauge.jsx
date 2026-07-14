@@ -2,6 +2,7 @@ import GaugeComponent from "react-gauge-component";
 
 function SkillGauge({
   skill,
+  gaugeIdPrefix,
   hasStarted,
   isSelected,
   prefersReducedMotion,
@@ -10,6 +11,7 @@ function SkillGauge({
   const gaugeValue = hasStarted ? skill.level : 0;
 
   const gaugeAnimationKey = [
+    gaugeIdPrefix,
     skill.id,
     hasStarted ? "active" : "idle",
     replayToken,
@@ -22,7 +24,7 @@ function SkillGauge({
     >
       <GaugeComponent
         key={gaugeAnimationKey}
-        id={`technical-gauge-${skill.id}`}
+        id={`${gaugeIdPrefix}-gauge-${skill.id}`}
         type="semicircle"
         value={gaugeValue}
         minValue={0}

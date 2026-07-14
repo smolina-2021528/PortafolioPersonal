@@ -3,6 +3,9 @@ import { Info, X } from "lucide-react";
 
 function SkillExplanation({
   skill,
+  explanationId,
+  analysisLabel,
+  emptyMessage,
   onClose,
   prefersReducedMotion,
 }) {
@@ -12,7 +15,7 @@ function SkillExplanation({
         {skill ? (
           <motion.article
             key={skill.id}
-            id="technical-skill-explanation"
+            id={explanationId}
             role="region"
             aria-live="polite"
             aria-label={`Información de ${skill.name}`}
@@ -57,7 +60,7 @@ function SkillExplanation({
 
               <div className="min-w-0 flex-1">
                 <p className="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-cyan-electric">
-                  Technical analysis
+                  {analysisLabel}
                 </p>
 
                 <div className="mt-3 flex flex-wrap items-end gap-x-4 gap-y-2">
@@ -148,9 +151,7 @@ function SkillExplanation({
                 </p>
 
                 <p className="mt-3 max-w-2xl text-base leading-7 text-foreground/48">
-                  Selecciona uno de los indicadores para conocer
-                  cómo se aplica esa habilidad dentro de los
-                  proyectos de Sebastián.
+                  {emptyMessage}
                 </p>
               </div>
             </div>

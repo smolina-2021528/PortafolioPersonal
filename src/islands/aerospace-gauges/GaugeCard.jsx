@@ -6,6 +6,10 @@ import SkillGauge from "./SkillGauge";
 function GaugeCard({
   skill,
   index,
+  categoryCode,
+  explanationId,
+  gaugeIdPrefix,
+  telemetryLabel,
   hasStarted,
   isSelected,
   onSelect,
@@ -20,9 +24,7 @@ function GaugeCard({
       aria-label={`Ver información sobre ${skill.name}, nivel ${skill.level}%`}
       aria-pressed={isSelected}
       aria-describedby={
-        isSelected
-          ? "technical-skill-explanation"
-          : undefined
+        isSelected ? explanationId : undefined
       }
       initial={
         prefersReducedMotion
@@ -32,17 +34,10 @@ function GaugeCard({
               y: 24,
             }
       }
-      animate={
-        hasStarted
-          ? {
-              opacity: 1,
-              y: 0,
-            }
-          : {
-              opacity: 0,
-              y: 24,
-            }
-      }
+      animate={{
+        opacity: 1,
+        y: 0,
+      }}
       transition={{
         duration: prefersReducedMotion ? 0 : 0.5,
         delay: prefersReducedMotion ? 0 : index * 0.045,
@@ -81,7 +76,7 @@ function GaugeCard({
       <div className="flex w-full items-start justify-between gap-4">
         <div>
           <span className="font-mono text-[0.6rem] uppercase tracking-[0.2em] text-cyan-electric">
-            TK-{skillNumber}
+            {categoryCode}-{skillNumber}
           </span>
 
           <h3 className="mt-2 text-lg font-medium tracking-tight text-foreground">
@@ -104,6 +99,7 @@ function GaugeCard({
       <div className="mt-5 flex flex-1 items-center">
         <SkillGauge
           skill={skill}
+          gaugeIdPrefix={gaugeIdPrefix}
           hasStarted={hasStarted}
           isSelected={isSelected}
           prefersReducedMotion={prefersReducedMotion}
@@ -113,7 +109,7 @@ function GaugeCard({
 
       <div className="mt-3 flex w-full items-center justify-between border-t border-white/7 pt-4">
         <span className="font-mono text-[0.58rem] uppercase tracking-[0.18em] text-foreground/32">
-          Skill telemetry
+          {telemetryLabel}
         </span>
 
         <span

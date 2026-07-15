@@ -17,22 +17,31 @@ import {
 } from "lucide-react";
 import { useEffect, useRef } from "react";
 
-function getStatusStyles(status) {
-  const normalizedStatus = status.toLowerCase();
+import ProjectCarousel from "./ProjectCarousel";
 
-  if (normalizedStatus.includes("desarrollo")) {
+function getStatusStyles(status) {
+  const normalizedStatus =
+    status.toLowerCase();
+
+  if (
+    normalizedStatus.includes("desarrollo")
+  ) {
     return {
       dot: "bg-magenta-glitch",
-      border: "border-magenta-glitch/25",
-      background: "bg-magenta-glitch/[0.055]",
+      border:
+        "border-magenta-glitch/25",
+      background:
+        "bg-magenta-glitch/[0.055]",
       text: "text-magenta-glitch",
     };
   }
 
   return {
     dot: "bg-cyan-electric",
-    border: "border-cyan-electric/25",
-    background: "bg-cyan-electric/[0.055]",
+    border:
+      "border-cyan-electric/25",
+    background:
+      "bg-cyan-electric/[0.055]",
     text: "text-cyan-electric",
   };
 }
@@ -94,15 +103,17 @@ function ProjectSpecificContent({ project }) {
             label="Trabajo realizado"
           >
             <ul className="space-y-2">
-              {project.completed?.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-3"
-                >
-                  <span className="mt-2 size-1.5 shrink-0 rounded-full bg-cyan-electric" />
-                  {item}
-                </li>
-              ))}
+              {project.completed?.map(
+                (item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-3"
+                  >
+                    <span className="mt-2 size-1.5 shrink-0 rounded-full bg-cyan-electric" />
+                    {item}
+                  </li>
+                ),
+              )}
             </ul>
           </InformationCard>
 
@@ -111,15 +122,17 @@ function ProjectSpecificContent({ project }) {
             label="Siguientes etapas"
           >
             <ul className="space-y-2">
-              {project.pending?.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-3"
-                >
-                  <span className="mt-2 size-1.5 shrink-0 rounded-full bg-foreground/35" />
-                  {item}
-                </li>
-              ))}
+              {project.pending?.map(
+                (item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-3"
+                  >
+                    <span className="mt-2 size-1.5 shrink-0 rounded-full bg-foreground/35" />
+                    {item}
+                  </li>
+                ),
+              )}
             </ul>
           </InformationCard>
         </div>
@@ -137,12 +150,14 @@ function ProjectSpecificContent({ project }) {
               </p>
 
               <p className="mt-3 text-sm leading-7 text-foreground/62">
-                La información técnica, los datos, el
-                repositorio y la arquitectura interna no se
-                muestran por razones de privacidad y
-                confidencialidad. Cosmed se presenta como una
-                herramienta de apoyo y no como un sistema de
-                diagnóstico médico.
+                La información técnica, los
+                datos, el repositorio y la
+                arquitectura interna no se
+                muestran por razones de
+                privacidad y confidencialidad.
+                Cosmed se presenta como una
+                herramienta de apoyo y no como un
+                sistema de diagnóstico médico.
               </p>
             </div>
           </div>
@@ -160,11 +175,23 @@ function ProjectSpecificContent({ project }) {
             label="Capacidades"
           >
             <ul className="space-y-2">
-              <li>Lectura de archivos CSV, JSON y XLS.</li>
-              <li>Interacción mediante terminal.</li>
-              <li>Generación automática de archivos HTML.</li>
               <li>
-                Publicación independiente de Core y CLI.
+                Lectura de archivos CSV, JSON y
+                XLS.
+              </li>
+
+              <li>
+                Interacción mediante terminal.
+              </li>
+
+              <li>
+                Generación automática de archivos
+                HTML.
+              </li>
+
+              <li>
+                Publicación independiente de Core
+                y CLI.
               </li>
             </ul>
           </InformationCard>
@@ -174,14 +201,16 @@ function ProjectSpecificContent({ project }) {
             label="Visualizaciones"
           >
             <div className="flex flex-wrap gap-2">
-              {project.chartTypes?.map((chartType) => (
-                <span
-                  key={chartType}
-                  className="rounded-full border border-white/9 px-3 py-2 font-mono text-[0.57rem] uppercase tracking-[0.13em] text-foreground/55"
-                >
-                  {chartType}
-                </span>
-              ))}
+              {project.chartTypes?.map(
+                (chartType) => (
+                  <span
+                    key={chartType}
+                    className="rounded-full border border-white/9 px-3 py-2 font-mono text-[0.57rem] uppercase tracking-[0.13em] text-foreground/55"
+                  >
+                    {chartType}
+                  </span>
+                ),
+              )}
             </div>
           </InformationCard>
         </div>
@@ -206,7 +235,9 @@ function ProjectSpecificContent({ project }) {
           ) : null}
 
           {project.githubUrl ? (
-            <ProjectLink href={project.githubUrl}>
+            <ProjectLink
+              href={project.githubUrl}
+            >
               Repositorio
             </ProjectLink>
           ) : null}
@@ -215,7 +246,9 @@ function ProjectSpecificContent({ project }) {
     );
   }
 
-  if (project.id === "restaurant-manager") {
+  if (
+    project.id === "restaurant-manager"
+  ) {
     return (
       <>
         <div className="grid gap-4 lg:grid-cols-2">
@@ -223,18 +256,20 @@ function ProjectSpecificContent({ project }) {
             icon={ShieldCheck}
             label="Implementación"
           >
-            Sistema web con autenticación, administración de
-            roles, backend, base de datos e integración entre
-            los diferentes componentes de la aplicación.
+            Sistema web con autenticación,
+            administración de roles, backend,
+            base de datos e integración entre los
+            diferentes componentes de la
+            aplicación.
           </InformationCard>
 
           <InformationCard
             icon={Rocket}
             label="Despliegue"
           >
-            La aplicación se encuentra desplegada en la nube y
-            preparada para demostrar el funcionamiento general
-            del sistema.
+            La aplicación se encuentra desplegada
+            en la nube y preparada para demostrar
+            el funcionamiento general del sistema.
           </InformationCard>
         </div>
 
@@ -274,7 +309,9 @@ function ProjectLightbox({
   );
 
   const handleBackdropClick = (event) => {
-    if (event.target === event.currentTarget) {
+    if (
+      event.target === event.currentTarget
+    ) {
       onClose();
     }
   };
@@ -296,7 +333,8 @@ function ProjectLightbox({
         opacity: 0,
       }}
       transition={{
-        duration: prefersReducedMotion ? 0 : 0.25,
+        duration:
+          prefersReducedMotion ? 0 : 0.25,
       }}
       onMouseDown={handleBackdropClick}
       className="fixed inset-0 z-80 overflow-y-auto bg-background/92 p-3 backdrop-blur-xl sm:p-6"
@@ -311,7 +349,10 @@ function ProjectLightbox({
           layoutId={`project-card-${project.id}`}
           transition={{
             layout: {
-              duration: prefersReducedMotion ? 0 : 0.55,
+              duration:
+                prefersReducedMotion
+                  ? 0
+                  : 0.55,
               ease: [0.22, 1, 0.36, 1],
             },
           }}
@@ -426,34 +467,9 @@ function ProjectLightbox({
             </div>
 
             <div>
-              <div className="relative flex min-h-68 items-center justify-center overflow-hidden rounded-[1.75rem] border border-white/9 bg-background/55 p-8 sm:min-h-80">
-                <div
-                  aria-hidden="true"
-                  className="cyber-grid absolute inset-0 opacity-30"
-                />
-
-                <div
-                  aria-hidden="true"
-                  className="absolute size-56 rounded-full border border-cyan-electric/8"
-                />
-
-                <div className="relative text-center">
-                  <Layers3
-                    aria-hidden="true"
-                    className="mx-auto size-10 text-cyan-electric"
-                  />
-
-                  <p className="mt-5 font-mono text-xs uppercase tracking-[0.22em] text-cyan-electric">
-                    Visual archive
-                  </p>
-
-                  <p className="mx-auto mt-3 max-w-md text-sm leading-7 text-foreground/45">
-                    El carrusel de capturas y la navegación
-                    visual serán integrados en el siguiente
-                    commit.
-                  </p>
-                </div>
-              </div>
+              <ProjectCarousel
+                project={project}
+              />
 
               <div className="mt-5">
                 <ProjectSpecificContent

@@ -1,3 +1,4 @@
+import BusinessCardIsland from "../islands/business-card/BusinessCardIsland";
 import RightSidebar from "../islands/right-sidebar/RightSidebar";
 import ContactSection from "../sections/ContactSection";
 import CurriculumSection from "../sections/CurriculumSection";
@@ -14,6 +15,7 @@ function PortfolioPage() {
       </h1>
 
       <RightSidebar />
+      <BusinessCardIsland />
 
       <WelcomeSection />
       <ProfileSection />

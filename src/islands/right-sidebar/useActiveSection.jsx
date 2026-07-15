@@ -1,66 +1,147 @@
 import { useEffect, useState } from "react";
 
+const VIEWPORT_ANCHOR_RATIO = 0.38;
+
 function getInitialSection(sectionIds) {
   if (typeof window === "undefined") {
-    return sectionIds[0];
+    return sectionIds[0] ?? null;
   }
 
   const hashSection = window.location.hash.replace("#", "");
 
   return sectionIds.includes(hashSection)
     ? hashSection
-    : sectionIds[0];
+    : sectionIds[0] ?? null;
+}
+
+function getSectionAtViewportAnchor(sections) {
+  const viewportAnchor =
+    window.innerHeight * VIEWPORT_ANCHOR_RATIO;
+
+  const sectionAtAnchor = sections.find((section) => {
+    const sectionRect =
+      section.getBoundingClientRect();
+
+    return (
+      sectionRect.top <= viewportAnchor &&
+      sectionRect.bottom > viewportAnchor
+    );
+  });
+
+  if (sectionAtAnchor) {
+    return sectionAtAnchor.id;
+  }
+
+  const nearestSection = sections.reduce(
+    (currentNearest, section) => {
+      const sectionRect =
+        section.getBoundingClientRect();
+
+      const distanceToAnchor = Math.abs(
+        sectionRect.top - viewportAnchor,
+      );
+
+      if (
+        !currentNearest ||
+        distanceToAnchor <
+          currentNearest.distanceToAnchor
+      ) {
+        return {
+          id: section.id,
+          distanceToAnchor,
+        };
+      }
+
+      return currentNearest;
+    },
+    null,
+  );
+
+  return nearestSection?.id ?? sections[0]?.id ?? null;
 }
 
 function useActiveSection(sectionIds) {
-  const [activeSection, setActiveSection] = useState(() =>
-    getInitialSection(sectionIds),
-  );
+  const [activeSection, setActiveSection] =
+    useState(() => getInitialSection(sectionIds));
 
   useEffect(() => {
     const sections = sectionIds
-      .map((sectionId) => document.getElementById(sectionId))
+      .map((sectionId) =>
+        document.getElementById(sectionId),
+      )
       .filter(Boolean);
 
     if (!sections.length) {
       return undefined;
     }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleSections = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort(
-            (firstEntry, secondEntry) =>
-              secondEntry.intersectionRatio -
-              firstEntry.intersectionRatio,
-          );
+    let animationFrameId = null;
 
-        if (visibleSections[0]) {
-          setActiveSection(visibleSections[0].target.id);
-        }
-      },
+    const updateActiveSection = () => {
+      animationFrameId = null;
+
+      const nextActiveSection =
+        getSectionAtViewportAnchor(sections);
+
+      setActiveSection((currentSection) =>
+        currentSection === nextActiveSection
+          ? currentSection
+          : nextActiveSection,
+      );
+    };
+
+    const requestActiveSectionUpdate = () => {
+      if (animationFrameId !== null) {
+        return;
+      }
+
+      animationFrameId =
+        window.requestAnimationFrame(
+          updateActiveSection,
+        );
+    };
+
+    updateActiveSection();
+
+    window.addEventListener(
+      "scroll",
+      requestActiveSectionUpdate,
       {
-        rootMargin: "-35% 0px -50% 0px",
-        threshold: [0, 0.1, 0.25, 0.5, 0.75],
+        passive: true,
       },
     );
 
-    sections.forEach((section) => observer.observe(section));
+    window.addEventListener(
+      "resize",
+      requestActiveSectionUpdate,
+    );
 
-    const handleHashChange = () => {
-      const hashSection = window.location.hash.replace("#", "");
-
-      if (sectionIds.includes(hashSection)) {
-        setActiveSection(hashSection);
-      }
-    };
-
-    window.addEventListener("hashchange", handleHashChange);
+    window.addEventListener(
+      "hashchange",
+      requestActiveSectionUpdate,
+    );
 
     return () => {
-      observer.disconnect();
-      window.removeEventListener("hashchange", handleHashChange);
+      window.removeEventListener(
+        "scroll",
+        requestActiveSectionUpdate,
+      );
+
+      window.removeEventListener(
+        "resize",
+        requestActiveSectionUpdate,
+      );
+
+      window.removeEventListener(
+        "hashchange",
+        requestActiveSectionUpdate,
+      );
+
+      if (animationFrameId !== null) {
+        window.cancelAnimationFrame(
+          animationFrameId,
+        );
+      }
     };
   }, [sectionIds]);
 

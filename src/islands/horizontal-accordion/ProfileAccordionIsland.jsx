@@ -64,7 +64,7 @@ const contactInformation = [
   {
     id: "linkedin",
     label: "LinkedIn",
-    value: "Perfil pendiente",
+    value: "sebastian-molina-dev",
     href: socialLinks.linkedin.url,
     icon: BriefcaseBusiness,
     external: true,

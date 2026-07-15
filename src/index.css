@@ -6,14 +6,27 @@
   --color-cyan-electric: #00f2fe;
   --color-magenta-glitch: #ff007f;
 
-  --font-sans: "Space Grotesk", "Inter", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+  --font-sans:
+    "Space Grotesk",
+    "Inter",
+    system-ui,
+    sans-serif;
+
+  --font-mono:
+    "JetBrains Mono",
+    "Fira Code",
+    ui-monospace,
+    monospace;
 }
 
 :root {
   color: #f8fafc;
   background: #0b0f19;
-  font-family: "Space Grotesk", "Inter", system-ui, sans-serif;
+  font-family:
+    "Space Grotesk",
+    "Inter",
+    system-ui,
+    sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -23,6 +36,8 @@
 html {
   min-width: 320px;
   scroll-behavior: smooth;
+  scroll-padding-top: 1rem;
+  scrollbar-gutter: stable;
   background: #0b0f19;
 }
 
@@ -30,7 +45,13 @@ body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
+  overflow-x: clip;
   background: #0b0f19;
+}
+
+img,
+svg {
+  max-width: 100%;
 }
 
 button,
@@ -38,10 +59,20 @@ a {
   -webkit-tap-highlight-color: transparent;
 }
 
-button:focus-visible,
-a:focus-visible {
+:where(
+  button,
+  a,
+  input,
+  select,
+  textarea,
+  [tabindex]
+):focus-visible {
   outline: 2px solid #00f2fe;
   outline-offset: 4px;
+}
+
+section[id] {
+  scroll-margin-top: 1rem;
 }
 
 ::selection {
@@ -49,19 +80,24 @@ a:focus-visible {
   background: #00f2fe;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
+.modal-scroll-area {
+  scrollbar-width: thin;
+  scrollbar-color:
+    rgba(0, 242, 254, 0.45)
+    rgba(255, 255, 255, 0.04);
+}
 
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
+.modal-scroll-area::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-scroll-area::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.modal-scroll-area::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(0, 242, 254, 0.4);
 }
 
 .cyber-grid {
@@ -77,6 +113,7 @@ a:focus-visible {
     );
 
   background-size: 72px 72px;
+
   mask-image: linear-gradient(
     to bottom,
     black,
@@ -107,7 +144,9 @@ a:focus-visible {
   z-index: 1;
   color: #00f2fe;
   opacity: 0.72;
-  animation: glitch-cyan 220ms steps(2, jump-none) both;
+  animation:
+    glitch-cyan 220ms
+    steps(2, jump-none) both;
   clip-path: inset(12% 0 56% 0);
 }
 
@@ -115,12 +154,16 @@ a:focus-visible {
   z-index: 1;
   color: #ff007f;
   opacity: 0.72;
-  animation: glitch-magenta 220ms steps(2, jump-none) both;
+  animation:
+    glitch-magenta 220ms
+    steps(2, jump-none) both;
   clip-path: inset(58% 0 16% 0);
 }
 
 .glitch-text.is-glitching {
-  animation: glitch-base 220ms steps(2, jump-none) both;
+  animation:
+    glitch-base 220ms
+    steps(2, jump-none) both;
 }
 
 @keyframes glitch-base {
@@ -174,7 +217,39 @@ a:focus-visible {
   }
 }
 
+@supports (min-height: 100svh) {
+  .min-h-screen {
+    min-height: 100svh;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :where(
+    button,
+    a,
+    input,
+    select,
+    textarea,
+    [tabindex]
+  ):focus-visible {
+    outline-width: 3px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
   .glitch-text,
   .glitch-text::before,
   .glitch-text::after {

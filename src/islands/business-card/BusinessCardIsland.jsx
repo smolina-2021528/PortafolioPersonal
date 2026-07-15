@@ -6,25 +6,18 @@ import {
 import { X } from "lucide-react";
 import {
   useCallback,
-  useEffect,
   useRef,
   useState,
 } from "react";
 
 import profile from "../../content/profile.json";
 import socialLinks from "../../content/socialLinks.json";
+import useEscapeKey from "../../shared/hooks/useEscapeKey";
+import useFocusTrap from "../../shared/hooks/useFocusTrap";
+import useScrollLock from "../../shared/hooks/useScrollLock";
 import BusinessCardBack from "./BusinessCardBack";
 import BusinessCardFront from "./BusinessCardFront";
 import useCopyEmail from "./useCopyEmail";
-
-const focusableElementsSelector = [
-  "a[href]",
-  "button:not([disabled])",
-  "input:not([disabled])",
-  "select:not([disabled])",
-  "textarea:not([disabled])",
-  '[tabindex]:not([tabindex="-1"])',
-].join(",");
 
 function BusinessCardIsland() {
   const prefersReducedMotion = Boolean(
@@ -36,7 +29,7 @@ function BusinessCardIsland() {
     useState(false);
 
   const launcherRef = useRef(null);
-  const modalRef = useRef(null);
+  const dialogRef = useRef(null);
   const closeButtonRef = useRef(null);
 
   const {
@@ -52,10 +45,6 @@ function BusinessCardIsland() {
   const closeCard = useCallback(() => {
     setIsOpen(false);
     setIsFlipped(false);
-
-    window.requestAnimationFrame(() => {
-      launcherRef.current?.focus();
-    });
   }, []);
 
   const toggleCard = () => {
@@ -64,82 +53,15 @@ function BusinessCardIsland() {
     );
   };
 
-  useEffect(() => {
-    if (!isOpen) {
-      return undefined;
-    }
+  useScrollLock(isOpen);
 
-    const previousOverflow =
-      document.body.style.overflow;
+  useEscapeKey(closeCard, isOpen);
 
-    document.body.style.overflow = "hidden";
-
-    window.requestAnimationFrame(() => {
-      closeButtonRef.current?.focus();
-    });
-
-    const handleKeyDown = (event) => {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        closeCard();
-        return;
-      }
-
-      if (event.key !== "Tab") {
-        return;
-      }
-
-      const focusableElements = Array.from(
-        modalRef.current?.querySelectorAll(
-          focusableElementsSelector,
-        ) ?? [],
-      );
-
-      if (!focusableElements.length) {
-        event.preventDefault();
-        return;
-      }
-
-      const firstElement = focusableElements[0];
-
-      const lastElement =
-        focusableElements[
-          focusableElements.length - 1
-        ];
-
-      if (
-        event.shiftKey &&
-        document.activeElement === firstElement
-      ) {
-        event.preventDefault();
-        lastElement.focus();
-        return;
-      }
-
-      if (
-        !event.shiftKey &&
-        document.activeElement === lastElement
-      ) {
-        event.preventDefault();
-        firstElement.focus();
-      }
-    };
-
-    window.addEventListener(
-      "keydown",
-      handleKeyDown,
-    );
-
-    return () => {
-      document.body.style.overflow =
-        previousOverflow;
-
-      window.removeEventListener(
-        "keydown",
-        handleKeyDown,
-      );
-    };
-  }, [closeCard, isOpen]);
+  useFocusTrap(dialogRef, {
+    isActive: isOpen,
+    initialFocusRef: closeButtonRef,
+    restoreFocusRef: launcherRef,
+  });
 
   const handleCardClick = (event) => {
     const clickedElement = event.target;
@@ -183,7 +105,7 @@ function BusinessCardIsland() {
         aria-haspopup="dialog"
         aria-expanded={isOpen}
         onClick={openCard}
-        className="group fixed bottom-5 left-5 z-70 grid size-16 place-items-center rounded-full border border-cyan-electric/35 bg-background/90 p-1.5 shadow-[0_16px_50px_rgba(0,0,0,0.55),0_0_24px_rgba(0,242,254,0.12)] backdrop-blur-xl transition-transform duration-300 hover:scale-105 sm:bottom-6 sm:left-6"
+        className="group fixed bottom-4 left-4 z-70 grid size-14 place-items-center rounded-full border border-cyan-electric/35 bg-background/90 p-1.5 shadow-[0_16px_50px_rgba(0,0,0,0.55),0_0_24px_rgba(0,242,254,0.12)] backdrop-blur-xl transition-transform duration-300 hover:scale-105 sm:bottom-6 sm:left-6 sm:size-16"
       >
         <span className="relative grid size-full place-items-center overflow-hidden rounded-full bg-cyan-electric/8 font-mono text-xs font-semibold text-cyan-electric">
           SM
@@ -203,7 +125,7 @@ function BusinessCardIsland() {
           className="absolute bottom-0.5 right-0.5 size-3 rounded-full border-2 border-background bg-cyan-electric shadow-[0_0_10px_rgba(0,242,254,0.8)]"
         />
 
-        <span className="pointer-events-none absolute left-[calc(100%+0.75rem)] whitespace-nowrap rounded-lg border border-white/10 bg-background/95 px-3 py-2 font-mono text-[0.58rem] uppercase tracking-[0.16em] text-foreground/65 opacity-0 shadow-xl backdrop-blur-xl transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100 group-focus-visible:translate-x-1 group-focus-visible:opacity-100">
+        <span className="pointer-events-none absolute left-[calc(100%+0.75rem)] hidden whitespace-nowrap rounded-lg border border-white/10 bg-background/95 px-3 py-2 font-mono text-[0.58rem] uppercase tracking-[0.16em] text-foreground/65 opacity-0 shadow-xl backdrop-blur-xl transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100 group-focus-visible:translate-x-1 group-focus-visible:opacity-100 sm:block">
           Ver tarjeta
         </span>
       </button>
@@ -211,11 +133,7 @@ function BusinessCardIsland() {
       <AnimatePresence>
         {isOpen ? (
           <motion.div
-            ref={modalRef}
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="business-card-dialog-title"
-            aria-describedby="business-card-dialog-description"
+            role="presentation"
             initial={
               prefersReducedMotion
                 ? false
@@ -230,14 +148,21 @@ function BusinessCardIsland() {
               opacity: 0,
             }}
             transition={{
-              duration: prefersReducedMotion
-                ? 0
-                : 0.25,
+              duration:
+                prefersReducedMotion
+                  ? 0
+                  : 0.25,
             }}
-            className="fixed inset-0 z-100 overflow-y-auto bg-background/80 backdrop-blur-xl"
+            className="fixed inset-0 z-100 overflow-y-auto overscroll-contain bg-background/80 backdrop-blur-xl"
           >
             <div className="flex min-h-full items-center justify-center p-4 py-8 sm:p-8">
-              <motion.div
+              <motion.section
+                ref={dialogRef}
+                tabIndex={-1}
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="business-card-dialog-title"
+                aria-describedby="business-card-dialog-description"
                 initial={
                   prefersReducedMotion
                     ? false
@@ -262,12 +187,18 @@ function BusinessCardIsland() {
                       }
                 }
                 transition={{
-                  duration: prefersReducedMotion
-                    ? 0
-                    : 0.38,
-                  ease: [0.22, 1, 0.36, 1],
+                  duration:
+                    prefersReducedMotion
+                      ? 0
+                      : 0.38,
+                  ease: [
+                    0.22,
+                    1,
+                    0.36,
+                    1,
+                  ],
                 }}
-                className="relative w-full max-w-3xl"
+                className="relative w-full max-w-3xl focus-visible:outline-none"
               >
                 <div className="mb-4 flex items-center justify-between gap-4 px-1">
                   <div>
@@ -282,8 +213,8 @@ function BusinessCardIsland() {
                       id="business-card-dialog-description"
                       className="mt-1 text-sm text-foreground/45"
                     >
-                      Haz clic sobre la tarjeta para
-                      ver la cara posterior.
+                      Haz clic sobre la tarjeta
+                      para ver la cara posterior.
                     </p>
                   </div>
 
@@ -302,7 +233,7 @@ function BusinessCardIsland() {
                 </div>
 
                 <div
-                  className="relative min-h-128 w-full sm:aspect-[1.586/1] sm:min-h-0"
+                  className="relative min-h-136 w-full sm:aspect-[1.586/1] sm:min-h-0"
                   style={{
                     perspective: "1500px",
                   }}
@@ -342,6 +273,12 @@ function BusinessCardIsland() {
                     }}
                   >
                     <div
+                      aria-hidden={isFlipped}
+                      inert={
+                        isFlipped
+                          ? ""
+                          : undefined
+                      }
                       className={`absolute inset-0 ${
                         isFlipped
                           ? "pointer-events-none"
@@ -364,6 +301,12 @@ function BusinessCardIsland() {
                     </div>
 
                     <div
+                      aria-hidden={!isFlipped}
+                      inert={
+                        !isFlipped
+                          ? ""
+                          : undefined
+                      }
                       className={`absolute inset-0 ${
                         isFlipped
                           ? "pointer-events-auto"
@@ -397,7 +340,7 @@ function BusinessCardIsland() {
                 <p className="mt-4 text-center font-mono text-[0.55rem] uppercase tracking-[0.17em] text-foreground/30">
                   Presiona Escape para cerrar
                 </p>
-              </motion.div>
+              </motion.section>
             </div>
 
             <p

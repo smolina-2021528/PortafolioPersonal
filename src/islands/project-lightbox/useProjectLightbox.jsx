@@ -1,10 +1,12 @@
 import {
   useCallback,
-  useEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
+
+import useEscapeKey from "../../shared/hooks/useEscapeKey";
+import useScrollLock from "../../shared/hooks/useScrollLock";
 
 function useProjectLightbox(projects) {
   const [selectedProjectId, setSelectedProjectId] =
@@ -24,14 +26,17 @@ function useProjectLightbox(projects) {
   const selectProject = useCallback(
     (projectId, triggerElement = null) => {
       const projectExists = projects.some(
-        (project) => project.id === projectId,
+        (project) =>
+          project.id === projectId,
       );
 
       if (!projectExists) {
         return;
       }
 
-      triggerElementRef.current = triggerElement;
+      triggerElementRef.current =
+        triggerElement;
+
       setSelectedProjectId(projectId);
     },
     [projects],
@@ -45,37 +50,16 @@ function useProjectLightbox(projects) {
     });
   }, []);
 
-  useEffect(() => {
-    if (!selectedProjectId) {
-      return undefined;
-    }
+  const isLightboxOpen = Boolean(
+    selectedProjectId,
+  );
 
-    const previousOverflow =
-      document.body.style.overflow;
+  useScrollLock(isLightboxOpen);
 
-    document.body.style.overflow = "hidden";
-
-    const handleEscape = (event) => {
-      if (event.key === "Escape") {
-        clearSelection();
-      }
-    };
-
-    window.addEventListener(
-      "keydown",
-      handleEscape,
-    );
-
-    return () => {
-      document.body.style.overflow =
-        previousOverflow;
-
-      window.removeEventListener(
-        "keydown",
-        handleEscape,
-      );
-    };
-  }, [clearSelection, selectedProjectId]);
+  useEscapeKey(
+    clearSelection,
+    isLightboxOpen,
+  );
 
   return {
     selectedProjectId,

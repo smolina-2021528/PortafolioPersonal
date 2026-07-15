@@ -1,19 +1,25 @@
-import { motion } from "motion/react";
+import {
+  motion,
+  useInView,
+} from "motion/react";
 import {
   Award,
   BookOpen,
   BriefcaseBusiness,
 } from "lucide-react";
+import { useRef } from "react";
 
 const categoryConfiguration = {
   academic: {
     label: "Formación",
     icon: BookOpen,
   },
+
   certification: {
     label: "Certificación",
     icon: Award,
   },
+
   project: {
     label: "Proyecto",
     icon: BriefcaseBusiness,
@@ -28,25 +34,66 @@ function GraphNode({
   onSelect,
   prefersReducedMotion,
 }) {
+  const nodeContainerRef = useRef(null);
+
+  const isNodeInView = useInView(
+    nodeContainerRef,
+    {
+      once: false,
+      amount: 0.15,
+      margin: "80px 0px 80px 0px",
+    },
+  );
+
   const category =
     categoryConfiguration[node.category] ??
     categoryConfiguration.academic;
 
   const CategoryIcon = category.icon;
-  const nodeNumber = String(index + 1).padStart(
-    2,
-    "0",
-  );
+
+  const nodeNumber = String(
+    index + 1,
+  ).padStart(2, "0");
+
+  const floatingAnimation =
+    !prefersReducedMotion && isNodeInView
+      ? {
+          y: [0, -5, 0],
+        }
+      : {
+          y: 0,
+        };
+
+  const floatingTransition =
+    !prefersReducedMotion && isNodeInView
+      ? {
+          y: {
+            duration: 4 + index * 0.18,
+            repeat:
+              Number.POSITIVE_INFINITY,
+            ease: "easeInOut",
+            delay: index * 0.12,
+          },
+        }
+      : {
+          y: {
+            duration: 0.2,
+          },
+        };
 
   return (
     <motion.div
+      ref={nodeContainerRef}
       style={{
         "--node-x-mobile":
           `${node.position.mobile.x}%`,
+
         "--node-y-mobile":
           `${node.position.mobile.y}%`,
+
         "--node-x-desktop":
           `${node.position.desktop.x}%`,
+
         "--node-y-desktop":
           `${node.position.desktop.y}%`,
       }}
@@ -64,13 +111,17 @@ function GraphNode({
       }}
       viewport={{
         once: false,
-        amount: 0.4,
+        amount: 0.3,
       }}
       transition={{
-        duration: prefersReducedMotion ? 0 : 0.5,
-        delay: prefersReducedMotion
-          ? 0
-          : index * 0.06,
+        duration:
+          prefersReducedMotion ? 0 : 0.5,
+
+        delay:
+          prefersReducedMotion
+            ? 0
+            : index * 0.06,
+
         ease: [0.22, 1, 0.36, 1],
       }}
       className="absolute left-(--node-x-mobile) top-(--node-y-mobile) z-10 -translate-x-1/2 -translate-y-1/2 lg:left-(--node-x-desktop) lg:top-(--node-y-desktop)"
@@ -81,25 +132,8 @@ function GraphNode({
         aria-pressed={isSelected}
         aria-controls="curriculum-node-detail"
         onClick={() => onSelect(node.id)}
-        animate={
-          prefersReducedMotion
-            ? undefined
-            : {
-                y: [0, -5, 0],
-              }
-        }
-        transition={
-          prefersReducedMotion
-            ? undefined
-            : {
-                y: {
-                  duration: 4 + index * 0.18,
-                  repeat: Number.POSITIVE_INFINITY,
-                  ease: "easeInOut",
-                  delay: index * 0.12,
-                },
-              }
-        }
+        animate={floatingAnimation}
+        transition={floatingTransition}
         whileHover={
           prefersReducedMotion
             ? undefined

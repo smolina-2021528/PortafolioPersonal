@@ -12,7 +12,6 @@ function HeroPhoto({ photo, name }) {
         <div className="relative aspect-4/5 overflow-hidden rounded-[1.55rem] bg-[#080b12]">
           <img
             src={photo}
-            alt={`Espacio reservado para la fotografía`}
             className="h-full w-full object-cover object-center grayscale-[0.15]"
             loading="eager"
             fetchPriority="high"

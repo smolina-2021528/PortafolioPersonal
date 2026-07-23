@@ -79,29 +79,41 @@
     ]
   },
   {
-    "id": "restaurant-manager",
-    "title": "Gestor de restaurante",
-    "status": "Desplegado en la nube",
-    "role": "Backend Developer",
+    "id": "ciudad-activa",
+    "title": "Ciudad Activa",
+    "status": "En desarrollo",
+    "role": "Full Stack Developer",
     "technologies": [
       "React",
-      "MongoDB",
-      "JavaScript",
-      "Docker"
+      "TypeScript",
+      "Expo",
+      "PostgreSQL/PostGIS",
+      "Gemini",
+      "Cloudinary",
+      "Leaflet"
     ],
-    "description": "Sistema web para la administración centralizada de procesos internos de restaurante.",
+    "description": "Plataforma web y móvil de gestión urbana que permite a los ciudadanos reportar problemas de su comunidad y facilita a las municipalidades su clasificación, asignación, seguimiento y resolución.",
     "githubUrl": null,
-    "deployUrl": "https://restaurant-management-system-frontend-cnmn3vj9r-ecujcuj.vercel.app/login",
+    "deployUrl": null,
     "tags": [
-      "Backend",
-      "Roles",
-      "Auth",
-      "Deploy"
+      "Web + Mobile",
+      "IA",
+      "Geolocalización",
+      "Reportes ciudadanos",
+      "Impacto social"
+    ],
+    "features": [
+      "Creación de reportes ciudadanos con fotografías tomadas desde la aplicación móvil.",
+      "Registro de ubicación en tiempo real para identificar el lugar del incidente.",
+      "Análisis de reportes mediante inteligencia artificial.",
+      "Detección de reportes similares o posiblemente duplicados.",
+      "Seguimiento de estados, asignaciones, comentarios e historial.",
+      "Aplicación móvil orientada a ciudadanos y plataforma web para administración municipal."
     ],
     "images": [
-      "/images/projects/restaurant-manager/screenshot-1.png",
-      "/images/projects/restaurant-manager/screenshot-2.png",
-      "/images/projects/restaurant-manager/screenshot-3.png"
+      "/images/projects/ciudad-activa/screenshot-1.png",
+      "/images/projects/ciudad-activa/screenshot-2.png",
+      "/images/projects/ciudad-activa/screenshot-3.png"
     ]
   }
 ]

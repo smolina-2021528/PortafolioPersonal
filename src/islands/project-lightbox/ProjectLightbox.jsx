@@ -246,46 +246,75 @@ function ProjectSpecificContent({ project }) {
     );
   }
 
-  if (
-    project.id === "restaurant-manager"
-  ) {
-    return (
-      <>
-        <div className="grid gap-4 lg:grid-cols-2">
-          <InformationCard
-            icon={ShieldCheck}
-            label="Implementación"
-          >
-            Sistema web con autenticación,
-            administración de roles, backend,
-            base de datos e integración entre los
-            diferentes componentes de la
-            aplicación.
-          </InformationCard>
+  if (project.id === "ciudad-activa") {
+  return (
+    <>
+      <div className="grid gap-4 lg:grid-cols-2">
+        <InformationCard
+          icon={ShieldCheck}
+          label="Reportes ciudadanos"
+        >
+          Los ciudadanos pueden reportar problemas urbanos,
+          como baches, postes caídos, acumulación de basura y
+          otros inconvenientes de su comunidad. Cada reporte
+          puede incluir fotografías y su ubicación geográfica.
+        </InformationCard>
 
-          <InformationCard
-            icon={Rocket}
-            label="Despliegue"
-          >
-            La aplicación se encuentra desplegada
-            en la nube y preparada para demostrar
-            el funcionamiento general del sistema.
-          </InformationCard>
+        <InformationCard
+          icon={Layers3}
+          label="Gestión municipal"
+        >
+          La plataforma web permite revisar, clasificar,
+          asignar y dar seguimiento a los reportes recibidos,
+          facilitando la coordinación de las acciones necesarias
+          para atender cada incidencia.
+        </InformationCard>
+      </div>
+
+      <div className="mt-4 grid gap-4 lg:grid-cols-2">
+        <InformationCard
+          icon={Code2}
+          label="Inteligencia artificial"
+        >
+          El sistema utiliza inteligencia artificial para
+          analizar la información de los reportes y apoyar
+          procesos como la clasificación y la detección de
+          incidencias similares o posiblemente duplicadas.
+        </InformationCard>
+
+        <InformationCard
+          icon={Rocket}
+          label="Plataformas"
+        >
+          Ciudad Activa combina una aplicación móvil orientada
+          a los ciudadanos con una plataforma web administrativa
+          destinada a la gestión y seguimiento municipal.
+        </InformationCard>
+      </div>
+
+      {project.features?.length ? (
+        <div className="mt-4 rounded-2xl border border-cyan-electric/18 bg-cyan-electric/[0.035] p-5">
+          <p className="font-mono text-[0.6rem] uppercase tracking-[0.18em] text-cyan-electric">
+            Funcionalidades destacadas
+          </p>
+
+          <ul className="mt-4 space-y-3 text-sm leading-7 text-foreground/65">
+            {project.features.map((feature) => (
+              <li
+                key={feature}
+                className="flex items-start gap-3"
+              >
+                <span className="mt-2.5 size-1.5 shrink-0 rounded-full bg-cyan-electric shadow-[0_0_8px_rgba(0,242,254,0.55)]" />
+
+                <span>{feature}</span>
+              </li>
+            ))}
+          </ul>
         </div>
-
-        {project.deployUrl ? (
-          <div className="mt-5">
-            <ProjectLink
-              href={project.deployUrl}
-              icon={Rocket}
-            >
-              Abrir aplicación
-            </ProjectLink>
-          </div>
-        ) : null}
-      </>
-    );
-  }
+      ) : null}
+    </>
+  );
+}
 
   return null;
 }
